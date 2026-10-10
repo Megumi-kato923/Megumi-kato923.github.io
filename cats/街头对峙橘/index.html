@@ -35,8 +35,7 @@
       sessionStorage.setItem("bgm_idx",String(next));sessionStorage.setItem("bgm_pos","0");
       a.src=TRACKS[next];a.load();a.play().catch(function(){});
     });
-    // Only auto-play BGM, do NOT auto-remove welcome overlay
-    // The overlay is removed only when user clicks the button
+    // ONLY play audio if user already entered - NEVER auto-remove overlay
     if(sessionStorage.getItem("entered")==="1"){a.play().catch(function(){});}
   });
 })();
