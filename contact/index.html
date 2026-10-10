@@ -2,7 +2,9 @@
 (function(){
   var TRACKS=["/audio/dadaodong.mp4","/audio/chushan.mp4","/audio/qiji.mp4","/audio/jiumen.mp4","/audio/manbo.mp4"];
   var idx=parseInt(sessionStorage.getItem("bgm_idx")||"0",10);
+  var pos=parseFloat(sessionStorage.getItem("bgm_pos")||"0");
   var entered=sessionStorage.getItem("entered")==="1";
+
   window.__playBGM=function(){
     var a=document.querySelector("audio");
     if(!a)return;
@@ -11,19 +13,37 @@
   };
   window.__setTrack=function(i){
     sessionStorage.setItem("bgm_idx",String(i));
+    sessionStorage.setItem("bgm_pos","0");
     var a=document.querySelector("audio");
     if(a){a.src=TRACKS[i];a.load();a.play().catch(function(){});}
   };
+
+  function savePos(){
+    var a=document.querySelector("audio");
+    if(a&&!a.paused){
+      sessionStorage.setItem("bgm_idx",String(idx));
+      sessionStorage.setItem("bgm_pos",String(a.currentTime));
+    }
+  }
+  window.addEventListener("beforeunload",savePos);
+
   document.addEventListener("DOMContentLoaded",function(){
     var a=document.querySelector("audio");
     if(!a)return;
     a.src=TRACKS[idx];
+    a.addEventListener("loadedmetadata",function(){
+      if(pos>0&&pos<a.duration-1){
+        a.currentTime=pos;
+      }
+    });
     a.addEventListener("ended",function(){
       idx=(idx+1)%TRACKS.length;
       sessionStorage.setItem("bgm_idx",String(idx));
+      sessionStorage.setItem("bgm_pos","0");
       a.src=TRACKS[idx];a.load();a.play().catch(function(){});
     });
     if(entered){
+      a.volume=0.35;
       a.play().catch(function(){});
       var ov=document.getElementById("welcome-overlay");
       if(ov)ov.remove();
