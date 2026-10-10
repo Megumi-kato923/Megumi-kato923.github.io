@@ -1,4 +1,10 @@
-<!DOCTYPE html><html lang="zh-CN"><head><script>
+<!DOCTYPE html><html lang="zh-CN"><head><div id="welcome-overlay" style="position:fixed;inset:0;z-index:200;background:rgba(61,47,35,0.95);display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+<div style="text-align:center;max-width:28rem;">
+<div style="font-size:4.5rem;margin-bottom:1.5rem;">🐱</div>
+<h1 style="font-size:1.875rem;font-weight:700;color:#faf3e3;margin-bottom:0.75rem;">哈基米官网</h1>
+<p style="color:#c9b896;margin-bottom:2rem;line-height:1.6;">基米、老吴领衔哈气天团，六首代码生物等你认识。<br/>点下面按钮，让叮咚鸡为你开路。</p>
+<button onclick="sessionStorage.setItem('entered','1');window.__playBGM();document.getElementById('welcome-overlay').remove();" style="border-radius:9999px;background:#e8853d;padding:1rem 2.5rem;color:white;font-size:1.125rem;font-weight:600;border:none;cursor:pointer;box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);">点击进入</button>
+</div></div><script>
 (function(){
   var TRACKS=["/audio/dadaodong.mp4","/audio/chushan.mp4","/audio/qiji.mp4","/audio/jiumen.mp4","/audio/manbo.mp4","/audio/laowu-meow.mp4"];
   var idx=parseInt(sessionStorage.getItem("bgm_idx")||"-1",10);
